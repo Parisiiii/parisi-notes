@@ -12,9 +12,15 @@ A terminal notebook for tasks, project notes, and AI usage. Built with Go and
 Requires Go 1.24+ to build. Developed and tested on Linux.
 
 ```sh
-make build
-./bin/parisi
+make install
+parisi-notes
 ```
+
+`make install` places `parisi-notes` in `~/.local/bin`, which is commonly on
+the user `PATH`. Override the destination with `make install INSTALL_DIR=/path`.
+
+To build without installing, run `make build`; the executable is written to
+`./bin/parisi-notes`.
 
 Run the binary from any project directory to register and select that workspace.
 Inside a Git repository, nested directories use the worktree root. Other folders
@@ -69,6 +75,6 @@ make check  # formatting, vet, tests, and build
 Tests use temporary data and a mock ai-usagebar; no provider credentials are
 needed. Git is required for the worktree tests.
 
-`cmd/parisi` starts the app. `internal/app` contains the UI model, input handlers,
+`cmd/parisi-notes` starts the app. `internal/app` contains the UI model, input handlers,
 views, workspace storage, and usage integration. Dependencies are pinned in
 `go.mod` and `go.sum`.
