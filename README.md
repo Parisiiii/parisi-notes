@@ -72,3 +72,11 @@ needed. Git is required for the worktree tests.
 `cmd/parisi` starts the app. `internal/app` contains the UI model, input handlers,
 views, workspace storage, and usage integration. Dependencies are pinned in
 `go.mod` and `go.sum`.
+
+
+<img width="1597" height="778" alt="image" src="https://github.com/user-attachments/assets/9edf4a36-f98c-4bf3-8970-caf3e3928f4b" />
+
+<img width="1601" height="784" alt="image" src="https://github.com/user-attachments/assets/adb3ad21-5b1f-472d-b69e-f12567f4b0e7" />
+
+<img width="1248" height="743" alt="image" src="https://github.com/user-attachments/assets/9ce10e4d-35fa-41a4-a71c-2f74202f67d9" />
+
