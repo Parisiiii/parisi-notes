@@ -16,6 +16,8 @@ func (m Model) View() string {
 	body, help, status := m.notesView()
 	if m.tab == usageTab {
 		body, help, status = m.usageView()
+	} else if m.tab == memoryTab {
+		body, help, status = m.memoryView()
 	}
 	if !strings.Contains(help, "Tab") {
 		help += " • Tab switch tab"
@@ -69,7 +71,7 @@ func (m Model) usageView() (body, help, status string) {
 
 func (m Model) tabsView() string {
 	brand := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("147")).Render("PARISI")
-	labels := []string{"Notes", "AI Usage"}
+	labels := []string{"Notes", "AI Usage", "AI Memory"}
 	parts := make([]string, len(labels))
 	for i, label := range labels {
 		style := lipgloss.NewStyle().Padding(0, 1).Foreground(lipgloss.Color("245"))

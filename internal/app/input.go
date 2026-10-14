@@ -10,10 +10,13 @@ import (
 func (m Model) handleKey(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	key := msg.String()
 	if key == "tab" || key == "shift+tab" {
-		return m.switchTab()
+		return m.switchTab(key == "shift+tab")
 	}
 	if m.tab == usageTab {
 		return m.handleUsageKey(msg)
+	}
+	if m.tab == memoryTab {
+		return m.handleMemoryKey(msg)
 	}
 
 	var cmd tea.Cmd
@@ -30,8 +33,21 @@ func (m Model) handleKey(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	return m, cmd
 }
 
-func (m Model) switchTab() (tea.Model, tea.Cmd) {
-	m.tab = 1 - m.tab
+func (m Model) switchTab(back bool) (tea.Model, tea.Cmd) {
+	if back {
+		if m.tab == notesTab {
+			m.tab = memoryTab
+		} else {
+			m.tab--
+		}
+	} else if m.tab == memoryTab {
+		m.tab = notesTab
+	} else {
+		m.tab++
+	}
+	if m.tab == memoryTab && len(m.memoryProjects) == 0 && !m.memoryLoading {
+		return m.refreshMemory()
+	}
 	if m.tab == usageTab && (m.usageUpdated.IsZero() || time.Since(m.usageUpdated) > time.Minute) {
 		return m.refreshUsage()
 	}
@@ -123,6 +139,9 @@ func (m *Model) handleListKey(key string) tea.Cmd {
 	case "u":
 		m.tab = usageTab
 		return m.startUsageRefresh()
+	case "m":
+		m.tab = memoryTab
+		return m.startMemoryRefresh()
 	}
 	return nil
 }

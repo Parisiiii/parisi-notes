@@ -1,11 +1,13 @@
 # Parisi
 
-A terminal notebook for tasks, project notes, and AI usage. Built with Go and
+A terminal notebook for tasks, project notes, AI memory, and AI usage. Built with Go and
 [Bubble Tea](https://github.com/charmbracelet/bubbletea).
 
 - Tasks grouped by directory, with a separate notebook for each Git worktree.
 - Notes, search, completion, and deletion with confirmation.
 - An AI Usage tab powered by [ai-usagebar](https://github.com/akitaonrails/ai-usagebar).
+- An AI Memory tab for browsing projects and Markdown pages from
+  [ai-memory](https://github.com/akitaonrails/ai-memory).
 
 ## Run
 
@@ -30,7 +32,7 @@ use the current directory. All registered workspaces appear in one list.
 
 | Key | Action |
 | --- | --- |
-| Tab / Shift+Tab | Switch Notes and AI Usage; drafts are preserved |
+| Tab / Shift+Tab | Switch tabs; drafts are preserved |
 | ↑ / ↓ or j / k | Navigate |
 | n | Add a task to the selected workspace |
 | Enter / e | Expand a workspace or edit a task's note |
@@ -41,8 +43,9 @@ use the current directory. All registered workspaces appear in one list.
 | w / p | Jump to the next workspace / Personal |
 | a | Reload workspace data |
 | u / r | Open AI Usage / refresh it while visible |
+| m | Open AI Memory |
 | Esc | Cancel editing, clear search, or return to Notes |
-| q | Quit from the list or AI Usage |
+| q | Quit from the list, AI Usage, or AI Memory |
 
 Tasks save immediately. Notes save with Ctrl+S; Esc discards the draft.
 Deletion is permanent after confirmation.
@@ -53,6 +56,17 @@ Install and configure **ai-usagebar** separately and put it on your `PATH`.
 Parisi reads `ai-usagebar usage --json` and displays provider cards, usage bars,
 balances, and reset times. It refreshes every minute while the tab is open.
 Failed refreshes retain the previous report. Notes work without this integration.
+
+## AI memory
+
+Run **ai-memory** separately with its HTTP server available. Parisi connects to
+`AI_MEMORY_SERVER_URL`, defaulting to `http://127.0.0.1:49374`, and sends
+`AI_MEMORY_AUTH_TOKEN` as a bearer token when it is set. When that variable is
+unset, Parisi reads the owner-only `auth-token` created by ai-memory's hook
+installer in `AI_MEMORY_DATA_DIR` or the platform's default ai-memory data
+directory. The AI Memory tab is a read-only browser for projects and their
+Markdown pages: use Up/Down to select, Enter to open, Esc to go back, and `r` to
+refresh. Parisi notes remain available when ai-memory is offline or unconfigured.
 
 ## Your data
 
@@ -85,4 +99,3 @@ views, workspace storage, and usage integration. Dependencies are pinned in
 <img width="1601" height="784" alt="image" src="https://github.com/user-attachments/assets/adb3ad21-5b1f-472d-b69e-f12567f4b0e7" />
 
 <img width="1248" height="743" alt="image" src="https://github.com/user-attachments/assets/9ce10e4d-35fa-41a4-a71c-2f74202f67d9" />
-

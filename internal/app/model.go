@@ -23,6 +23,7 @@ const (
 const (
 	notesTab = iota
 	usageTab
+	memoryTab
 )
 
 // Model owns the UI state. Tasks and origins are loaded together in workspace order.
@@ -39,11 +40,21 @@ type Model struct {
 	input                 textinput.Model
 	editor                textarea.Model
 	panel                 viewport.Model
+	memoryPanel           viewport.Model
 	tab                   int
 	loading               bool
 	usageError            string
 	usageUpdated          time.Time
 	report                *usageReport
+	memoryLoading         bool
+	memoryError           string
+	memoryUpdated         time.Time
+	memoryLevel           memoryLevel
+	memoryCursor          int
+	memoryProjects        []memoryProject
+	memoryPages           []memoryPageSummary
+	memoryPage            *memoryPage
+	memoryProject         memoryProject
 }
 type usageMsg struct {
 	report *usageReport
@@ -73,7 +84,7 @@ func New() (Model, error) {
 	editor := textarea.New()
 	editor.ShowLineNumbers = false
 	editor.CharLimit = 0
-	m := Model{base: base, workspace: w, width: 80, height: 24, input: input, editor: editor, panel: viewport.New(74, 15)}
+	m := Model{base: base, workspace: w, width: 80, height: 24, input: input, editor: editor, panel: viewport.New(74, 15), memoryPanel: viewport.New(74, 15)}
 	m.collapsed = map[string]bool{}
 	if err := m.showAll(); err != nil {
 		return Model{}, err
@@ -107,7 +118,10 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.input.Width = max(10, m.width-10)
 		m.panel.Width = max(10, m.width-6)
 		m.panel.Height = max(3, m.height-9)
+		m.memoryPanel.Width = max(10, m.width-6)
+		m.memoryPanel.Height = max(3, m.height-9)
 		m.renderUsage()
+		m.renderMemoryPage()
 	case usageMsg:
 		m.loading = false
 		if msg.err != nil {
@@ -118,6 +132,8 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.usageUpdated = time.Now()
 		}
 		m.renderUsage()
+	case memoryMsg:
+		m.handleMemoryMsg(msg)
 
 	case tea.KeyMsg:
 		return m.handleKey(msg)
