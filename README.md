@@ -99,3 +99,6 @@ views, workspace storage, and usage integration. Dependencies are pinned in
 <img width="1601" height="784" alt="image" src="https://github.com/user-attachments/assets/adb3ad21-5b1f-472d-b69e-f12567f4b0e7" />
 
 <img width="1248" height="743" alt="image" src="https://github.com/user-attachments/assets/9ce10e4d-35fa-41a4-a71c-2f74202f67d9" />
+
+<img width="1916" height="1082" alt="image" src="https://github.com/user-attachments/assets/34d27d3b-fdc7-4fc2-988f-9305dc007825" />
+
