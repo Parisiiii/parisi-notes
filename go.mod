@@ -1,4 +1,4 @@
-module parisi-stats
+module parisi-notes
 
 go 1.24.0
 

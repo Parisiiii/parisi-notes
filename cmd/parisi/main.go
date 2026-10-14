@@ -6,7 +6,7 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 
-	"parisi-stats/internal/app"
+	"parisi-notes/internal/app"
 )
 
 func main() {
