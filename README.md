@@ -1,4 +1,4 @@
-# Parisi
+# parisi-notes
 
 A terminal notebook for tasks, project notes, AI memory, and AI usage. Built with Go and
 [Bubble Tea](https://github.com/charmbracelet/bubbletea).
